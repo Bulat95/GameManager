@@ -6,7 +6,7 @@ func _ready():
 	file.close()
 	if test_json_conv != null:
 		if test_json_conv["name"] == null:
-			text = "123"
+			text = "ПРОЕКТ НЕ ВЫБРАН!"
 		else:
 			text = test_json_conv["name"]
 	else:

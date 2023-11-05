@@ -3,16 +3,22 @@ extends Label
 var years = 0
 var months = 0
 var days = 0
+var daysForTask = 10
 var hours = 0
 var paused = false
 var timer
 
+@onready var progressBarValue = $ProgressBar
+
 var file
+
+var coefficientForTimer = GlobalConst.coefficientForTimer
 
 func _ready():
 	# Создаем узел Timer для отсчета времени
 	timer = Timer.new()
-	timer.wait_time = 1.0  # Устанавливаем время ожидания таймера в 1 секунду (или любое другое значение)
+	#timer.wait_time = 1.0  # Устанавливаем время ожидания таймера в 1 секунду (или любое другое значение)
+	timer.wait_time = coefficientForTimer  # Устанавливаем время ожидания таймера в 1 секунду (или любое другое значение)
 	timer.connect("timeout", Callable(self, "_on_timer_timeout"))
 	add_child(timer)
 	timer.start()
@@ -27,13 +33,23 @@ func _process(delta):
 		if hours >= 24:
 			hours -= 24
 			days += 1
+			daysForTask -=1
+			progressBarValue += 1
 			if days >= 30:
 				days -= 30
 				months += 1
 				if months >= 12:
 					months -= 12
 					years += 1
+		if daysForTask == 0:
+			toggle_pause()
+			
+			print("Задача завершена!")
+		
 		update_time_label()
+
+func setDaysForTask(days: int) -> void:
+	daysForTask = days
 
 func _on_timer_timeout():
 	# Обновление времени каждый раз, когда срабатывает таймер (проходит 1 секунда)

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cp0stban861qc"]
+[gd_scene load_steps=7 format=3 uid="uid://cp0stban861qc"]
 
 [ext_resource type="Texture2D" uid="uid://dotv7qit3y8fu" path="res://asssets/комната вер 1.jpg" id="1"]
 [ext_resource type="Script" path="res://Scripts/LevelMenuScript.gd" id="3"]
 [ext_resource type="Script" path="res://Scripts/GameProcess.gd" id="3_xnrxp"]
+[ext_resource type="Script" path="res://Scenes/ProgressBarScript.gd" id="4_pitq0"]
 [ext_resource type="Script" path="res://Scripts/ClockScript.gd" id="5"]
 
 [sub_resource type="GDScript" id="1"]
@@ -60,13 +61,6 @@ anchor_bottom = 1.0
 text = "BOARD"
 script = SubResource("1")
 
-[node name="Board_panel" type="Panel" parent="Interactive_panel"]
-process_mode = 3
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="Information_panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -99,6 +93,21 @@ offset_right = 329.0
 offset_bottom = -4.0
 grow_horizontal = 2
 script = ExtResource("3_xnrxp")
+
+[node name="ProgressBar" type="ProgressBar" parent="Information_panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1100.5
+offset_top = -26.5
+offset_right = 1350.5
+offset_bottom = 84.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_pitq0")
 
 [node name="Buttoms_panel" type="Panel" parent="."]
 layout_mode = 0

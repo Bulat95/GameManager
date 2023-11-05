@@ -6,7 +6,6 @@ var games = []
 @onready var action = get_node("Panel/select_genre")
 @onready var nameProduct = get_node("Panel/LineEdit")
 
-
 func _on_Start_build_game_pressed():
 	GlobalConst.dropdown_select_product = product.text
 	GlobalConst.dropdown_select_action = action.text
@@ -15,10 +14,11 @@ func _on_Start_build_game_pressed():
 	get_tree().change_scene_to_file("res://Scenes/Level_1.tscn")
 
 func _ready():
-	initProducts()	
+	initTableProducts()
 
 func _on_genre_selected():
 	action.clear()
+	product.set("Game", 1)
 	if product.text == "Game":
 		action.add_item("Action", 1)
 		action.add_item("RPG")
@@ -28,12 +28,12 @@ func _on_genre_selected():
 		action.add_item("Shooter")
 		action.add_item("Sports")
 		action.add_item("Platformer")
-	elif product.text == "Engine":
-		action.add_item("Product 3")
-		action.add_item("Product 4")
+	if product.text == "Engine":
+		action.add_item("Product 1")
+		action.add_item("Product 2")
 	action.select(0)
 
-func initProducts():
+func initTableProducts():
 	product.add_item("Game")
 	product.add_separator()
 	product.add_item("Engine")
@@ -41,10 +41,8 @@ func initProducts():
 	product.add_item("Soft")
 	product.connect("item_selected", Callable(self, "_on_genre_selected"))
 
-
 func _on_select_product_item_selected(index):
 	_on_genre_selected()
-
 
 func save_products_to_json() -> void:
 	var file = FileAccess.open("res://Games/test.json", FileAccess.WRITE)

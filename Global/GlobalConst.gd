@@ -8,6 +8,8 @@ var nameProject
 var action
 var type
 
+var coefficientForTimer = 0.1
+
 var games = {}
 var softs = {}
 var engines = {}

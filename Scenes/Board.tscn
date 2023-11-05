@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bbu0k3jh6corf"]
 
-[ext_resource type="Script" path="res://Scripts/BackBoardScript.gd" id="2_a5ffc"]
+[ext_resource type="Script" path="res://Scripts/Menu/BackButtons/BackBoardScript.gd" id="2_oburb"]
 [ext_resource type="Script" path="res://Scripts/BoardScript.gd" id="3"]
-[ext_resource type="Script" path="res://Scenes/select_product.gd" id="3_2dnat"]
-[ext_resource type="Script" path="res://Scenes/select_genre.gd" id="4_mevif"]
+[ext_resource type="Script" path="res://Scripts/select_product.gd" id="3_varoq"]
+[ext_resource type="Script" path="res://Scripts/select_genre.gd" id="4_07glr"]
 
 [node name="BoardScene" type="Node2D"]
 script = ExtResource("3")
@@ -19,7 +19,7 @@ offset_top = 64.0
 offset_right = 1856.0
 offset_bottom = 128.0
 text = "BACK"
-script = ExtResource("2_a5ffc")
+script = ExtResource("2_oburb")
 
 [node name="LineEdit" type="LineEdit" parent="Panel"]
 layout_mode = 0
@@ -43,7 +43,7 @@ offset_left = 832.0
 offset_top = 192.0
 offset_right = 1088.0
 offset_bottom = 232.0
-script = ExtResource("3_2dnat")
+script = ExtResource("3_varoq")
 
 [node name="select_genre" type="OptionButton" parent="Panel"]
 layout_mode = 0
@@ -51,7 +51,7 @@ offset_left = 832.0
 offset_top = 320.0
 offset_right = 1088.0
 offset_bottom = 360.0
-script = ExtResource("4_mevif")
+script = ExtResource("4_07glr")
 
 [connection signal="pressed" from="Panel/Back" to="Panel/Back" method="_on_pressed"]
 [connection signal="pressed" from="Panel/Start_build_game" to="." method="_on_Start_build_game_pressed"]
