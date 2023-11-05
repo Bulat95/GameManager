@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Menu/BackButtons/BackFromLoadButtonScript.gd" type="Script" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+func _ready():
+	load_products_from_json()
+
+func load_products_from_json() -> void:
+	var dir = DirAccess.new()
+	var error = dir.open(\"res://Games\")
+
+	if error != OK:
+		print(\"Failed to open directory: res://Games\")
+		return
+	var files = dir.list_dir_begin() # TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
+	while true:
+		var file_name = dir.get_next()
+		if file_name == \"\":
+			break
+		if file_name.ends_with(\".json\"):
+			var file_path = \"res://Games/\" + file_name
+			var file = File.new()
+			if file.open(file_path, File.READ) == OK:
+				var json_str = file.get_as_text()
+				file.close()
+				var test_json_conv = JSON.new()
+				test_json_conv.parse(json_str)
+				var products_dict = test_json_conv.get_data()
+				if products_dict != null:
+					print(\"Values in file\", file_name, \":\")
+					var products_array = products_dict as Array  # Преобразование к типу Array
+					for dict in products_array:
+						if dict.has(\"name\"):
+							print(dict[\"name\"])
+	dir.list_dir_end()
+"
+
+[node name="Load" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="BackFromLoadButton" type="Button" parent="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = 292.0
+offset_right = 128.0
+offset_bottom = 356.0
+text = "BACK"
+script = ExtResource( 1 )
+
+[connection signal="pressed" from="Panel/BackFromLoadButton" to="Panel/BackFromLoadButton" method="_on_BackFromLoadButton_pressed"]

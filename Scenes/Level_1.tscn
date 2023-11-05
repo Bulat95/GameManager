@@ -1,0 +1,119 @@
+[gd_scene load_steps=6 format=3 uid="uid://cp0stban861qc"]
+
+[ext_resource type="Texture2D" uid="uid://dotv7qit3y8fu" path="res://asssets/комната вер 1.jpg" id="1"]
+[ext_resource type="Script" path="res://Scripts/LevelMenuScript.gd" id="3"]
+[ext_resource type="Script" path="res://Scripts/GameProcess.gd" id="3_xnrxp"]
+[ext_resource type="Script" path="res://Scripts/ClockScript.gd" id="5"]
+
+[sub_resource type="GDScript" id="1"]
+script/source = "extends Button
+"
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Texture_panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="office" type="TextureRect" parent="Texture_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1")
+expand_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="Interactive_panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.081
+anchor_bottom = 0.103
+offset_left = 640.0
+offset_top = 256.0
+offset_right = 612.48
+offset_bottom = 208.76
+
+[node name="Board" type="Button" parent="Interactive_panel"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "BOARD"
+script = SubResource("1")
+
+[node name="Board_panel" type="Panel" parent="Interactive_panel"]
+process_mode = 3
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Information_panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.542
+anchor_bottom = 0.045
+offset_left = -853.0
+offset_top = 47.0
+offset_right = -812.64
+offset_bottom = 67.4
+grow_horizontal = 2
+
+[node name="Clock" type="Label" parent="Information_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5")
+
+[node name="GameProcess" type="Label" parent="Information_panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 194.0
+offset_top = 1.0
+offset_right = 329.0
+offset_bottom = -4.0
+grow_horizontal = 2
+script = ExtResource("3_xnrxp")
+
+[node name="Buttoms_panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 1664.0
+offset_top = 64.0
+offset_right = 1856.0
+offset_bottom = 104.0
+
+[node name="MENU" type="Button" parent="Buttoms_panel"]
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 40.0
+text = "MENU"
+script = ExtResource("3")
+
+[connection signal="pressed" from="Interactive_panel/Board" to="Information_panel/Clock" method="_on_Board_pressed"]
+[connection signal="pressed" from="Buttoms_panel/MENU" to="Information_panel/Clock" method="_on_MENU_pressed"]
+[connection signal="pressed" from="Buttoms_panel/MENU" to="Buttoms_panel/MENU" method="_on_MENU_pressed"]
