@@ -13,6 +13,7 @@ var coefficientForTimer = 0.1
 var games = {}
 var softs = {}
 var engines = {}
+var products = []
 
 func _ready():
 	load_products_from_json()

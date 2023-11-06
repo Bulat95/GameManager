@@ -34,7 +34,7 @@ func _process(delta):
 			hours -= 24
 			days += 1
 			daysForTask -=1
-			progressBarValue += 1
+			# progressBarValue += 1
 			if days >= 30:
 				days -= 30
 				months += 1

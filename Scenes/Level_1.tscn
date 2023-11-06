@@ -1,13 +1,27 @@
-[gd_scene load_steps=7 format=3 uid="uid://cp0stban861qc"]
+[gd_scene load_steps=10 format=3 uid="uid://cp0stban861qc"]
 
 [ext_resource type="Texture2D" uid="uid://dotv7qit3y8fu" path="res://asssets/комната вер 1.jpg" id="1"]
+[ext_resource type="Script" path="res://Scenes/Level_1.gd" id="1_vpx14"]
 [ext_resource type="Script" path="res://Scripts/LevelMenuScript.gd" id="3"]
 [ext_resource type="Script" path="res://Scripts/GameProcess.gd" id="3_xnrxp"]
 [ext_resource type="Script" path="res://Scenes/ProgressBarScript.gd" id="4_pitq0"]
 [ext_resource type="Script" path="res://Scripts/ClockScript.gd" id="5"]
+[ext_resource type="PackedScene" uid="uid://closwos01m1w8" path="res://Scenes/ProductBoard.tscn" id="7_j6mmt"]
 
 [sub_resource type="GDScript" id="1"]
 script/source = "extends Button
+"
+
+[sub_resource type="GDScript" id="GDScript_mbj5m"]
+script/source = "extends Node
+
+func _process(delta):
+	if len(GlobalConst.products) == 0:
+		return 'Продукт еще не создан...'
+	
+	var product = GlobalConst.products[0]
+	$Title.text = product.title
+#
 "
 
 [node name="Control" type="Control"]
@@ -17,6 +31,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_vpx14")
 
 [node name="Texture_panel" type="Panel" parent="."]
 layout_mode = 1
@@ -60,6 +75,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 text = "BOARD"
 script = SubResource("1")
+
+[node name="ProductBoardButton" type="Button" parent="Interactive_panel"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 74.0
+offset_right = 127.0
+offset_bottom = 106.0
+text = "Продукт"
 
 [node name="Information_panel" type="Panel" parent="."]
 layout_mode = 1
@@ -123,6 +146,19 @@ offset_bottom = 40.0
 text = "MENU"
 script = ExtResource("3")
 
+[node name="Product" type="Node" parent="."]
+script = SubResource("GDScript_mbj5m")
+
+[node name="Title" type="Label" parent="Product"]
+offset_left = 254.0
+offset_top = 164.0
+offset_right = 456.0
+offset_bottom = 190.0
+text = "Продукт еще не создан..."
+
+[node name="ProductBoard" parent="." instance=ExtResource("7_j6mmt")]
+
 [connection signal="pressed" from="Interactive_panel/Board" to="Information_panel/Clock" method="_on_Board_pressed"]
+[connection signal="pressed" from="Interactive_panel/ProductBoardButton" to="." method="_on_product_board_button_pressed"]
 [connection signal="pressed" from="Buttoms_panel/MENU" to="Information_panel/Clock" method="_on_MENU_pressed"]
 [connection signal="pressed" from="Buttoms_panel/MENU" to="Buttoms_panel/MENU" method="_on_MENU_pressed"]
