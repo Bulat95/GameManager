@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cp0stban861qc"]
+[gd_scene load_steps=13 format=3 uid="uid://cp0stban861qc"]
 
 [ext_resource type="Texture2D" uid="uid://dotv7qit3y8fu" path="res://asssets/комната вер 1.jpg" id="1"]
 [ext_resource type="Script" path="res://Scenes/Level_1.gd" id="1_vpx14"]
@@ -12,16 +12,53 @@
 script/source = "extends Button
 "
 
+[sub_resource type="GDScript" id="GDScript_58ss0"]
+script/source = "extends Label
+
+
+func _physics_process(delta):
+	text = Time.get_datetime_string_from_unix_time(GlobalConst.hoursPassed * GlobalConst.SECONDS_IN_HOUR, true)
+"
+
 [sub_resource type="GDScript" id="GDScript_mbj5m"]
 script/source = "extends Node
 
-func _process(delta):
+var style:StyleBoxFlat = StyleBoxFlat.new()
+
+func _physics_process(delta):
 	if len(GlobalConst.products) == 0:
 		return 'Продукт еще не создан...'
 	
 	var product = GlobalConst.products[0]
-	$Title.text = product.title
-#
+	$Panel/Title.text = product.title
+	$Panel/ProgressBar.value = product.getProgress() * 100
+
+
+	
+	
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_56u40"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 0)
+
+[sub_resource type="GDScript" id="GDScript_k6d0m"]
+script/source = "extends Panel
+
+
+func _ready():
+	var style:StyleBoxFlat = StyleBoxFlat.new()
+	style.bg_color = Color(100, 100, 100, 0.1)
+	add_theme_stylebox_override(\"panel\", style)
+
+func _physics_process(delta):
+	if len(GlobalConst.products) == 0:
+		return
+	
+	var product: Product = GlobalConst.products[0]
+	if product.isCompleted():
+		get_theme_stylebox(\"panel\").bg_color = Color(0, 100, 0, 0.5)
+	else: 
+		get_theme_stylebox(\"panel\").bg_color = Color(100, 100, 0, 0.5)
 "
 
 [node name="Control" type="Control"]
@@ -132,6 +169,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_pitq0")
 
+[node name="Clock2" type="Label" parent="Information_panel"]
+layout_mode = 0
+offset_left = -79.0
+offset_top = 122.0
+offset_right = 25.0
+offset_bottom = 158.0
+script = SubResource("GDScript_58ss0")
+
 [node name="Buttoms_panel" type="Panel" parent="."]
 layout_mode = 0
 offset_left = 1664.0
@@ -149,12 +194,28 @@ script = ExtResource("3")
 [node name="Product" type="Node" parent="."]
 script = SubResource("GDScript_mbj5m")
 
-[node name="Title" type="Label" parent="Product"]
-offset_left = 254.0
-offset_top = 164.0
-offset_right = 456.0
-offset_bottom = 190.0
+[node name="Panel" type="Panel" parent="Product"]
+offset_left = 260.0
+offset_top = 166.0
+offset_right = 481.0
+offset_bottom = 221.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_56u40")
+script = SubResource("GDScript_k6d0m")
+
+[node name="Title" type="Label" parent="Product/Panel"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -1.0
+offset_right = 205.0
+offset_bottom = 25.0
 text = "Продукт еще не создан..."
+
+[node name="ProgressBar" type="ProgressBar" parent="Product/Panel"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 21.0
+offset_right = 214.0
+offset_bottom = 48.0
 
 [node name="ProductBoard" parent="." instance=ExtResource("7_j6mmt")]
 

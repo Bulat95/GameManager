@@ -1,5 +1,7 @@
 extends Node
 
+var SECONDS_IN_HOUR = 3600
+
 var dropdown_select_product
 var dropdown_select_action
 var line_edit_name_product
@@ -14,6 +16,8 @@ var games = {}
 var softs = {}
 var engines = {}
 var products = []
+
+var hoursPassed = 0
 
 func _ready():
 	load_products_from_json()
@@ -68,6 +72,8 @@ func remove_from_engine(name: String) -> void:
 	if engines.has(name):
 		engines.erase(name)
 
+func _physics_process(delta):
+	hoursPassed += delta
 
 
 
